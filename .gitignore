@@ -1,0 +1,7 @@
+.env
+node_modules/
+*.log
+pm2.log
+/data/audit/*.ndjson
+/data/missions/*.json
+/data/signals/autonomy-mode.json

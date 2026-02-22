@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "delivery-package.v1",
+  "title": "DeliveryPackageV1",
+  "type": "object",
+  "required": [
+    "delivery_id",
+    "mission_id",
+    "produced_at",
+    "summary",
+    "artifacts",
+    "evidence_refs",
+    "risk_disclosure",
+    "producer_ids"
+  ],
+  "properties": {
+    "delivery_id": { "type": "string", "minLength": 1 },
+    "mission_id": { "type": "string", "minLength": 1 },
+    "produced_at": { "type": "string", "format": "date-time" },
+    "summary": { "type": "string", "minLength": 1 },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "uri", "type"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "uri": { "type": "string", "minLength": 1 },
+          "type": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "explainability": {
+      "type": "object",
+      "properties": {
+        "decision_summary": { "type": "string" },
+        "limitations": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "risk_disclosure": { "type": "string", "minLength": 1 },
+    "producer_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "additionalProperties": false
+}

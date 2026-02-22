@@ -1,0 +1,16 @@
+{
+  "passive_index": 0.2,
+  "l3_incidents_last_24h": 0,
+  "on_time_delivery_rate": 0.9,
+  "first_pass_acceptance_rate": 0.75,
+  "hard_stop": false,
+  "suggestions": [
+    {
+      "title": "Improve Allocation Heuristic",
+      "objective": "Analyze failed allocations and propose ranking improvements",
+      "constraints": ["no production write"],
+      "acceptanceCriteria": ["include rollback plan"],
+      "budgetCap": 12
+    }
+  ]
+}

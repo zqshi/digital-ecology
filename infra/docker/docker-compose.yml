@@ -1,0 +1,54 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: de-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: digital_ecology
+      POSTGRES_USER: de_user
+      POSTGRES_PASSWORD: de_pass
+    ports:
+      - "55432:5432"
+    volumes:
+      - de_postgres_data:/var/lib/postgresql/data
+
+  redpanda:
+    image: redpandadata/redpanda:v24.1.5
+    container_name: de-redpanda
+    restart: unless-stopped
+    command:
+      - redpanda
+      - start
+      - --smp
+      - "1"
+      - --memory
+      - "1G"
+      - --reserve-memory
+      - "0M"
+      - --overprovisioned
+      - --node-id
+      - "0"
+      - --check=false
+      - --kafka-addr
+      - PLAINTEXT://0.0.0.0:9092
+      - --advertise-kafka-addr
+      - PLAINTEXT://127.0.0.1:9092
+    ports:
+      - "9092:9092"
+
+  opa:
+    image: openpolicyagent/opa:0.70.0
+    container_name: de-opa
+    restart: unless-stopped
+    command:
+      - run
+      - --server
+      - --addr=0.0.0.0:8181
+      - /policies
+    ports:
+      - "8181:8181"
+    volumes:
+      - ../opa-policies:/policies:ro
+
+volumes:
+  de_postgres_data:
